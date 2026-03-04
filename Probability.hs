@@ -1,23 +1,22 @@
-module Probability where
+module Main where
 
 import qualified Data.Map as Map
 import Data.Array (Array, array, (!))
+import Data.List (maximumBy)
+import Data.Ord (comparing)
+import Text.Printf (printf)
 
 
-{-
-To demonstrate requested functionalities,
-ghci -package containers -package array Probability.hs
-
-Part 2 -> normalize twoRolls
-Part 3 ->
-    import Data.List (maximumBy)
-    import Data.Ord (comparing)
-    maximumBy (comparing snd) $ getProbabilities (rollDice 100)
-
-Part 4 -> firstPlayerWins rollingStones
-- not nicely formatted but shows results
-
--}
+main :: IO ()
+main = do
+    putStrLn "Part 2"
+    print(normalize twoRolls)
+    putStrLn ""
+    putStrLn "Part 3: mode of 100 rolls"
+    print (maximumBy (comparing snd) $ getProbabilities (rollDice 100))
+    putStrLn ""
+    putStrLn "Part 4: First player win probabilities"
+    mapM_ (\(n, p) -> printf "%d: %.2f%%\n" n (p * 100)) (firstPlayerWins rollingStones)
 
 newtype Probability a
   = Probability {getProbabilities :: [(a, Double)]}
